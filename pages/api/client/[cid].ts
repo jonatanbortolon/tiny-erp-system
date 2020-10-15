@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next'; 
+//import { NextApiRequest, NextApiResponse } from 'next'; 
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-    const {
+export default async (/*req: NextApiRequest, res: NextApiResponse*/) => {
+    /*const {
         query: { cid },
-      } = req
+      } = req*/
 };
