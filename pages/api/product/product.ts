@@ -1,7 +1,7 @@
-import { NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Product from '../../../src/models/product';
 
-export default async (res: NextApiResponse) => {
+export default async (req: NextApiRequest,res: NextApiResponse) => {
   const products = await Product.find().sort({ category: -1 });
 
   res.status(200).json(products);
