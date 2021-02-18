@@ -23,7 +23,7 @@ const Modal = ({ opened, onClose, children, title }: ModalProps) => {
     <></>
   ) : (
     <ModalComponent onClick={onClose}>
-      <ModalBackground onClick={(e) => e.stopPropagation()}>
+      <ModalBackground onClick={(e: any) => e.stopPropagation()}>
         <ModalCloseButton onClick={onClose} />
         <ModalTitleDiv>
           <ModalTitle>{title}</ModalTitle>

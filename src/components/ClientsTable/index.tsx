@@ -46,12 +46,14 @@ const Table = ({
           ' ' +
           productPriceModal?.name
         }
-        onClose={() => changeProductPriceModal(null)}>
+        onClose={() => changeProductPriceModal(null)}
+      >
         <form
           onSubmit={(e) => {
             onProductChangePrice(e);
             changeProductPriceModal(null);
-          }}>
+          }}
+        >
           <ModalInputLabel htmlFor="product">Id do Produto</ModalInputLabel>
           <ModalInput
             disabled
@@ -72,7 +74,8 @@ const Table = ({
               height: 50,
               backgroundColor: '#f0f0f0',
               color: 'gray',
-            }}>
+            }}
+          >
             <TdContainer style={{ fontWeight: 'bold' }}>Código</TdContainer>
             <TdContainer style={{ fontWeight: 'bold' }}>Nome</TdContainer>
             <TdContainer style={{ fontWeight: 'bold' }}>Categoria</TdContainer>
@@ -95,7 +98,8 @@ const Table = ({
                   key={product._id}
                   style={{
                     backgroundColor: 'white',
-                  }}>
+                  }}
+                >
                   <TdContainer key={product._id + 'code'}>
                     {product.code}
                   </TdContainer>
@@ -117,7 +121,8 @@ const Table = ({
                     key={product._id + 'actions'}
                     style={{
                       verticalAlign: 'center',
-                    }}>
+                    }}
+                  >
                     <Button onClick={() => changeProductPriceModal(product)}>
                       Alterar Preço
                     </Button>

@@ -9,9 +9,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const categories = await Category.find();
 
-  await Product.deleteMany({ category: req.body.category });
+  await Product.Product.deleteMany({ category: req.body.category });
 
-  const products = await Product.find();
+  const products = await Product.Product.find();
 
   res.status(200).json({ category: categories, product: products });
 };

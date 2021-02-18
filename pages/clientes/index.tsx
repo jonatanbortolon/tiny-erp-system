@@ -32,11 +32,12 @@ const Clients: NextPage = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginLeft: 10,
-              }}>
+              }}
+            >
               <ToolBarInput
                 type="text"
                 placeholder="Procure por nome"
-                onChange={(e) => console.log(e.target.value)}
+                onChange={(e: any) => console.log(e.target.value)}
               />
               <SearchIcon />
             </div>

@@ -326,7 +326,7 @@ const Products: NextPage = () => {
                 <ToolBarInput
                   type="text"
                   placeholder="Procure por nome ou código"
-                  onChange={(e) => changeFilter(e.target.value)}
+                  onChange={(e: any) => changeFilter(e.target.value)}
                 />
                 <SearchIcon />
               </div>

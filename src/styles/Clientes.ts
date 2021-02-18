@@ -71,7 +71,7 @@ export const ToolBarButton = styled.button`
   padding: 0 10px;
   border: 1px solid gainsboro;
   border-radius: 3px;
-    margin-left: 10px;
+  margin-left: 10px;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);

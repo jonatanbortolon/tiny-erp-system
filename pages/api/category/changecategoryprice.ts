@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!operation) return res.status(500).json({ ok: false });
 
-  await Product.updateMany({ category: req.body.category }, [
+  await Product.Product.updateMany({ category: req.body.category }, [
     {
       $set: {
         price: {
@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     },
   ]);
 
-  const products = await Product.find().sort({ category: -1 });
+  const products = await Product.Product.find().sort({ category: -1 });
 
   res.status(200).json(products);
 };
