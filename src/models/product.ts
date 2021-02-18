@@ -7,7 +7,6 @@ const ProductSchema: Schema = new Schema(
   {
     code: {
       type: Number,
-      required: true,
     },
     name: {
       type: String,
