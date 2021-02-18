@@ -1,6 +1,7 @@
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
-import ProductDatabase from '../database/product';
+import ProductDatabase from "../database/product";
 
 const ProductSchema: Schema = new Schema(
   {
@@ -14,7 +15,7 @@ const ProductSchema: Schema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'Category',
+      ref: "Category",
     },
     quantity: {
       type: Number,
@@ -39,6 +40,7 @@ function getter(v: string): number {
   return parseFloat((parseInt(v) / 100).toFixed(2));
 }
 
-ProductSchema.set('toObject', { getters: true });
-ProductSchema.set('toJSON', { getters: true });
-export default ProductDatabase.model('Product', ProductSchema);
+ProductSchema.plugin(AutoIncrement, { inc_field: "code" });
+ProductSchema.set("toObject", { getters: true });
+ProductSchema.set("toJSON", { getters: true });
+export default ProductDatabase.model("Product", ProductSchema);
