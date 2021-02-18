@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   TableContainer,
@@ -7,11 +7,11 @@ import {
   Button,
   ChangePriceButton,
   DeleteButton,
-} from './styles';
+} from "./styles";
 
-import Modal, { ModalInput, ModalInputLabel } from '../Modal';
+import Modal, { ModalInput, ModalInputLabel } from "../Modal";
 
-import { Product, Category } from '../../interfaces';
+import { Product, Category } from "../../interfaces";
 
 interface TableProps {
   children?: React.ReactNode;
@@ -39,25 +39,27 @@ const Table = ({
       <Modal
         opened={productPriceModal === null ? false : true}
         title={
-          'Alterar Preço de ' +
+          "Alterar Preço de " +
           (categories.find(
             (category) => category._id === productPriceModal?.category
-          )?.name || 'Sem categoria') +
-          ' ' +
+          )?.name || "Sem categoria") +
+          " " +
           productPriceModal?.name
         }
-        onClose={() => changeProductPriceModal(null)}>
+        onClose={() => changeProductPriceModal(null)}
+      >
         <form
           onSubmit={(e) => {
             onProductChangePrice(e);
             changeProductPriceModal(null);
-          }}>
+          }}
+        >
           <ModalInputLabel htmlFor="product">Id do Produto</ModalInputLabel>
           <ModalInput
             disabled
             type="text"
             id="product"
-            value={productPriceModal?._id}
+            value={productPriceModal?.code}
           />
           <ModalInputLabel htmlFor="price">Preço (R$)</ModalInputLabel>
           <ModalInput type="number" id="price" step="0.01" />
@@ -70,14 +72,15 @@ const Table = ({
           <TrContainer
             style={{
               height: 50,
-              backgroundColor: '#f0f0f0',
-              color: 'gray',
-            }}>
-            <TdContainer style={{ fontWeight: 'bold' }}>Código</TdContainer>
-            <TdContainer style={{ fontWeight: 'bold' }}>Nome</TdContainer>
-            <TdContainer style={{ fontWeight: 'bold' }}>Categoria</TdContainer>
-            <TdContainer style={{ fontWeight: 'bold' }}>Quantidade</TdContainer>
-            <TdContainer style={{ fontWeight: 'bold' }}>Preço</TdContainer>
+              backgroundColor: "#f0f0f0",
+              color: "gray",
+            }}
+          >
+            <TdContainer style={{ fontWeight: "bold" }}>Código</TdContainer>
+            <TdContainer style={{ fontWeight: "bold" }}>Nome</TdContainer>
+            <TdContainer style={{ fontWeight: "bold" }}>Categoria</TdContainer>
+            <TdContainer style={{ fontWeight: "bold" }}>Quantidade</TdContainer>
+            <TdContainer style={{ fontWeight: "bold" }}>Preço</TdContainer>
             <TdContainer></TdContainer>
           </TrContainer>
         </thead>
@@ -94,30 +97,32 @@ const Table = ({
                 <TrContainer
                   key={product._id}
                   style={{
-                    backgroundColor: 'white',
-                  }}>
-                  <TdContainer key={product._id + 'code'}>
+                    backgroundColor: "white",
+                  }}
+                >
+                  <TdContainer key={product._id + "code"}>
                     {product.code}
                   </TdContainer>
-                  <TdContainer key={product._id + 'name'}>
+                  <TdContainer key={product._id + "name"}>
                     {product.name}
                   </TdContainer>
-                  <TdContainer key={product._id + 'category'}>
+                  <TdContainer key={product._id + "category"}>
                     {categories.find(
                       (category) => category._id === product.category
-                    )?.name || 'Sem categoria'}
+                    )?.name || "Sem categoria"}
                   </TdContainer>
-                  <TdContainer key={product._id + 'quantity'}>
+                  <TdContainer key={product._id + "quantity"}>
                     {product.quantity}
                   </TdContainer>
-                  <TdContainer key={product._id + 'price'}>
+                  <TdContainer key={product._id + "price"}>
                     {product.price} R$
                   </TdContainer>
                   <TdContainer
-                    key={product._id + 'actions'}
+                    key={product._id + "actions"}
                     style={{
-                      verticalAlign: 'center',
-                    }}>
+                      verticalAlign: "center",
+                    }}
+                  >
                     <Button onClick={() => changeProductPriceModal(product)}>
                       Alterar Preço
                     </Button>

@@ -1,6 +1,6 @@
-import { NextPage } from 'next';
+import { NextPage } from "next";
 
-import Layout, { Content, Menu } from '../../src/components/Layout';
+import Layout, { Content, Menu } from "../../src/components/Layout";
 
 import {
   ContentTitle,
@@ -11,39 +11,39 @@ import {
   ToolBarInput,
   SearchIcon,
   LoadingGif,
-} from '../../src/styles/Produtos';
+} from "../../src/styles/Produtos";
 
-import useSWR, { mutate } from 'swr';
+import useSWR, { mutate } from "swr";
 
-import { Category } from '../../src/interfaces';
-import Table from '../../src/components/ProductsTable';
-import { useState } from 'react';
+import { Category } from "../../src/interfaces";
+import Table from "../../src/components/ProductsTable";
+import { useState } from "react";
 import Modal, {
   ModalInput,
   ModalSelect,
   ModalInputLabel,
-} from '../../src/components/Modal';
-import Loading from '../../src/components/Loading';
+} from "../../src/components/Modal";
+import Loading from "../../src/components/Loading";
 import {
   Categoriesfetcher,
   Productsfetcher,
-} from '../../src/utils/swrFetchers';
+} from "../../src/utils/swrFetchers";
 
 //===================================================================================
 
 const Products: NextPage = () => {
   const { data: categories, error: categoriesError } = useSWR(
-    '/api/category/category',
+    "/api/category/category",
     Categoriesfetcher
   );
   const { data: products, error: productsError } = useSWR(
-    '/api/product/product',
+    "/api/product/product",
     Productsfetcher
   );
 
   const [loading, toggleLoading] = useState(false);
 
-  const [filter, changeFilter] = useState('');
+  const [filter, changeFilter] = useState("");
 
   const [categoryModal, toggleCategoryModal] = useState(false);
   const [productModal, toggleProductModal] = useState(false);
@@ -54,15 +54,15 @@ const Products: NextPage = () => {
     toggleLoading(true);
     e.preventDefault();
 
-    await fetch('/api/category/addcategory', {
-      method: 'POST',
+    await fetch("/api/category/addcategory", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
+        "Content-Type": "application/json;charset=utf-8",
       },
       // @ts-ignore
       body: JSON.stringify({ name: e.target[0].value }),
     }).then((resp) =>
-      resp.json().then((response) => mutate('/api/category/category', response))
+      resp.json().then((response) => mutate("/api/category/category", response))
     );
 
     toggleCategoryModal(false);
@@ -73,26 +73,28 @@ const Products: NextPage = () => {
     toggleLoading(true);
     e.preventDefault();
 
-    await fetch('/api/product/addproduct', {
-      method: 'POST',
+    await fetch("/api/product/addproduct", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
+        "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify({
         // @ts-ignore
-        code: e.target[0].value,
+        // code: e.target[0].value,
         // @ts-ignore
-        name: e.target[1].value,
+        name: e.target[0].value,
         // @ts-ignore
-        category: e.target[2].value,
+        category: e.target[1].value,
         // @ts-ignore
-        quantity: e.target[3].value,
+        quantity: !!e.target[2].value ? e.target[2].value : "0",
         // @ts-ignore
-        price: e.target[4].value,
+        price: e.target[3].value,
       }),
-    }).then((resp) =>
-      resp.json().then((response) => mutate('/api/product/product', response))
-    );
+    })
+      .then((resp) =>
+        resp.json().then((response) => mutate("/api/product/product", response))
+      )
+      .catch((error) => console.log(error));
 
     toggleProductModal(false);
     toggleLoading(false);
@@ -104,9 +106,9 @@ const Products: NextPage = () => {
     toggleLoading(true);
     e.preventDefault();
 
-    await fetch('/api/category/changecategoryprice', {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
+    await fetch("/api/category/changecategoryprice", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
       body: JSON.stringify({
         //@ts-ignore
         category: e.target[0].value,
@@ -114,15 +116,15 @@ const Products: NextPage = () => {
         price: e.target[1].value,
         //@ts-ignore
         operation: e.target[2].checked
-          ? 'up'
+          ? "up"
           : //@ts-ignore
           e.target[3].checked
-          ? 'down'
+          ? "down"
           : null,
       }),
     }).then((resp) =>
       resp.json().then((response) => {
-        mutate('/api/product/product', response);
+        mutate("/api/product/product", response);
         togglePriceCategoryModal(false);
       })
     );
@@ -136,9 +138,9 @@ const Products: NextPage = () => {
   ) {
     toggleLoading(true);
     e.preventDefault();
-    await fetch('/api/product/changeproductprice', {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
+    await fetch("/api/product/changeproductprice", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
       body: JSON.stringify({
         //@ts-ignore
         product: e.target[0].value,
@@ -147,7 +149,7 @@ const Products: NextPage = () => {
       }),
     }).then((resp) =>
       resp.json().then((response) => {
-        mutate('/api/product/product', response);
+        mutate("/api/product/product", response);
       })
     );
 
@@ -157,10 +159,10 @@ const Products: NextPage = () => {
   async function handleOnCategoryDelete(e: React.FormEvent<HTMLFormElement>) {
     toggleLoading(true);
     e.preventDefault();
-    await fetch('/api/category/removecategory', {
-      method: 'POST',
+    await fetch("/api/category/removecategory", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
+        "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify({
         //@ts-ignore
@@ -168,8 +170,8 @@ const Products: NextPage = () => {
       }),
     }).then((resp) =>
       resp.json().then((response) => {
-        mutate('/api/category/category', response.category);
-        mutate('/api/product/product', response.product);
+        mutate("/api/category/category", response.category);
+        mutate("/api/product/product", response.product);
       })
     );
 
@@ -179,17 +181,17 @@ const Products: NextPage = () => {
 
   async function handleOnProductDelete(id: string) {
     toggleLoading(true);
-    await fetch('/api/product/removeproduct', {
-      method: 'POST',
+    await fetch("/api/product/removeproduct", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
+        "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify({
         product: id,
       }),
     }).then((resp) =>
       resp.json().then((response) => {
-        mutate('/api/product/product', response);
+        mutate("/api/product/product", response);
       })
     );
 
@@ -203,7 +205,8 @@ const Products: NextPage = () => {
       <Modal
         opened={categoryModal}
         title="Adicionar Categoria"
-        onClose={() => toggleCategoryModal(false)}>
+        onClose={() => toggleCategoryModal(false)}
+      >
         <form onSubmit={handleCategorySubmit}>
           <ModalInputLabel htmlFor="name">Nome</ModalInputLabel>
           <ModalInput type="text" id="name" />
@@ -215,16 +218,17 @@ const Products: NextPage = () => {
       <Modal
         opened={productModal}
         title="Adicionar Produto"
-        onClose={() => toggleProductModal(false)}>
+        onClose={() => toggleProductModal(false)}
+      >
         <form onSubmit={handleProductSumbit}>
-          <ModalInputLabel htmlFor="code">Código</ModalInputLabel>
-          <ModalInput type="number" id="code" />
+          {/* <ModalInputLabel htmlFor="code">Código</ModalInputLabel> 
+          <ModalInput type="number" id="code" />*/}
           <ModalInputLabel htmlFor="name">Nome</ModalInputLabel>
           <ModalInput type="text" id="name" />
           <ModalInputLabel htmlFor="category">Categoria</ModalInputLabel>
           <ModalSelect id="category">
             {categories?.map((category: Category) => (
-              <option key={category.name + 'option'} value={category._id}>
+              <option key={category.name + "option"} value={category._id}>
                 {category.name}
               </option>
             ))}
@@ -241,12 +245,13 @@ const Products: NextPage = () => {
       <Modal
         opened={priceCategoryModal}
         title="Alterar preço da Categoria"
-        onClose={() => togglePriceCategoryModal(false)}>
+        onClose={() => togglePriceCategoryModal(false)}
+      >
         <form onSubmit={handleOnCategoryChangePrice}>
           <ModalInputLabel htmlFor="category">Categoria</ModalInputLabel>
           <ModalSelect id="category">
             {categories?.map((category: Category) => (
-              <option key={category.name + 'option'} value={category._id}>
+              <option key={category.name + "option"} value={category._id}>
                 {category.name}
               </option>
             ))}
@@ -274,22 +279,24 @@ const Products: NextPage = () => {
       <Modal
         opened={removeCategoryModal}
         title="Deletar Categoria"
-        onClose={() => toggleRemoveCategoryModal(false)}>
+        onClose={() => toggleRemoveCategoryModal(false)}
+      >
         <form onSubmit={handleOnCategoryDelete}>
           <span
             style={{
-              color: 'red',
+              color: "red",
               marginBottom: 50,
               fontSize: 12,
-              textAlign: 'center',
-            }}>
+              textAlign: "center",
+            }}
+          >
             Ao deletar a categoria todos os produtos associados a ela também
             serão deletados!
           </span>
           <ModalInputLabel htmlFor="category">Categoria</ModalInputLabel>
           <ModalSelect id="category">
             {categories?.map((category: Category) => (
-              <option key={category.name + 'option'} value={category._id}>
+              <option key={category.name + "option"} value={category._id}>
                 {category.name}
               </option>
             ))}
@@ -307,14 +314,15 @@ const Products: NextPage = () => {
             <ToolBarScroller>
               <div
                 style={{
-                  height: 'calc(100% - 10px)',
-                  border: '1px solid gainsboro',
+                  height: "calc(100% - 10px)",
+                  border: "1px solid gainsboro",
                   borderRadius: 3,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                   marginLeft: 10,
-                }}>
+                }}
+              >
                 <ToolBarInput
                   type="text"
                   placeholder="Procure por nome ou código"

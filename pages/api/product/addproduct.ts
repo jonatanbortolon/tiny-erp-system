@@ -6,23 +6,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(500).json({ status: "error" });
     return;
   }
-
   let newProd: any;
 
-  if (req.body.code === "") {
-    newProd = new Product({
-      name: req.body.name,
-      category: req.body.category,
-      quantity: req.body.quantity,
-      price: req.body.price,
-    });
-  } else {
-    newProd = new Product(req.body);
-  }
+  newProd = new Product.Product(req.body);
 
   await newProd.save();
 
-  const products = await Product.find().sort({ category: -1 });
-
+  const products = await Product.Product.find().sort({ category: -1 });
+  console.log(products);
   res.status(200).json(products);
 };
