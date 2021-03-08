@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import {
   TableContainer,
   TrContainer,
@@ -8,19 +7,13 @@ import {
   ChangePriceButton,
   DeleteButton,
 } from './styles';
-
 import Modal, { ModalInput, ModalInputLabel } from '../Modal';
+import useController from './controller';
 
-import { Product, Category } from '../../interfaces';
-
-interface TableProps {
-  children?: React.ReactNode;
-  filterString: string;
-  products: Product[];
-  categories: Category[];
-  onProductChangePrice: any;
-  onProductDelete: any;
-}
+/**
+ * TYPES
+ */
+import { ITableProps } from './types';
 
 const Table = ({
   filterString,
@@ -28,42 +21,39 @@ const Table = ({
   categories,
   onProductChangePrice,
   onProductDelete,
-}: TableProps) => {
-  const [productPriceModal, changeProductPriceModal] = useState<Product | null>(
-    null
-  );
+}: ITableProps) => {
+  const controller = useController();
 
   return (
     <>
       {/*DELETE CATEGORY MODAL ===================================================================*/}
       <Modal
-        opened={productPriceModal === null ? false : true}
+        opened={controller.productPriceModal === null ? false : true}
         title={
           'Alterar Preço de ' +
           (categories.find(
-            (category) => category._id === productPriceModal?.category
+            (category) =>
+              category._id === controller.productPriceModal?.category
           )?.name || 'Sem categoria') +
           ' ' +
-          productPriceModal?.name
+          controller.productPriceModal?.name
         }
-        onClose={() => changeProductPriceModal(null)}
-      >
+        onClose={() => controller.changeProductPriceModal(null)}>
         <form
           onSubmit={(e) => {
             onProductChangePrice(e);
-            changeProductPriceModal(null);
-          }}
-        >
-          <ModalInputLabel htmlFor="product">Id do Produto</ModalInputLabel>
+            controller.changeProductPriceModal(null);
+          }}>
+          <ModalInputLabel htmlFor='product'>Id do Produto</ModalInputLabel>
           <ModalInput
             disabled
-            type="text"
-            id="product"
-            value={productPriceModal?.code}
+            type='text'
+            id='product'
+            value={controller.productPriceModal?._id}
           />
-          <ModalInputLabel htmlFor="price">Preço (R$)</ModalInputLabel>
-          <ModalInput type="number" id="price" step="0.01" />
-          <ModalInput type="submit" value="Alterar Preço" />
+          <ModalInputLabel htmlFor='price'>Preço (R$)</ModalInputLabel>
+          <ModalInput type='number' id='price' step='0.01' />
+          <ModalInput type='submit' value='Alterar Preço' />
         </form>
       </Modal>
       {/*=====================================================================================*/}
@@ -74,8 +64,7 @@ const Table = ({
               height: 50,
               backgroundColor: '#f0f0f0',
               color: 'gray',
-            }}
-          >
+            }}>
             <TdContainer style={{ fontWeight: 'bold' }}>Código</TdContainer>
             <TdContainer style={{ fontWeight: 'bold' }}>Nome</TdContainer>
             <TdContainer style={{ fontWeight: 'bold' }}>Categoria</TdContainer>
@@ -89,45 +78,44 @@ const Table = ({
             // CATEGORY PRODUCTS LIST =============================================================================
             products
               .filter(
-                (product: Product) =>
+                (product) =>
                   product.name.includes(filterString) ||
-                  product.code.toString().includes(filterString)
+                  product._id.toString().includes(filterString)
               )
-              .map((product: Product) => (
+              .map((product, index) => (
                 <TrContainer
-                  key={product._id}
+                  key={index}
                   style={{
                     backgroundColor: 'white',
-                  }}
-                >
-                  <TdContainer key={product._id + 'code'}>
-                    {product.code}
-                  </TdContainer>
-                  <TdContainer key={product._id + 'name'}>
-                    {product.name}
-                  </TdContainer>
-                  <TdContainer key={product._id + 'category'}>
+                  }}>
+                  <TdContainer key={index + 'id'}>{product._id}</TdContainer>
+                  <TdContainer key={index + 'name'}>{product.name}</TdContainer>
+                  <TdContainer key={index + 'category'}>
                     {categories.find(
                       (category) => category._id === product.category
                     )?.name || 'Sem categoria'}
                   </TdContainer>
-                  <TdContainer key={product._id + 'quantity'}>
+                  <TdContainer key={index + 'quantity'}>
                     {product.quantity}
                   </TdContainer>
-                  <TdContainer key={product._id + 'price'}>
+                  <TdContainer key={index + 'price'}>
                     {product.price} R$
                   </TdContainer>
                   <TdContainer
-                    key={product._id + 'actions'}
+                    key={index + 'actions'}
                     style={{
                       verticalAlign: 'center',
-                    }}
-                  >
-                    <Button onClick={() => changeProductPriceModal(product)}>
+                    }}>
+                    <Button
+                      onClick={() =>
+                        controller.changeProductPriceModal(product)
+                      }>
                       Alterar Preço
                     </Button>
                     <ChangePriceButton
-                      onClick={() => changeProductPriceModal(product)}
+                      onClick={() =>
+                        controller.changeProductPriceModal(product)
+                      }
                     />
                     <DeleteButton
                       onClick={() => onProductDelete(product._id)}

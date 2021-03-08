@@ -23,6 +23,15 @@ export const TdContainer = styled.td`
     font-size: 12px;
     padding: 0 5px;
   }
+
+  @media (max-width: 515px) {
+    font-size: 10px;
+  }
+
+  @media (max-width: 450px) {
+    font-size: 8px;
+    word-break: break-word;
+  }
 `;
 
 export const Input = styled.input`

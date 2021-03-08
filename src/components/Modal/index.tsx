@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Modal as ModalComponent,
   ModalBackground,
@@ -11,14 +10,12 @@ import {
   ModalInputLabel as Label,
 } from './styles';
 
-interface ModalProps {
-  children?: React.ReactNode;
-  opened: boolean;
-  onClose: () => void;
-  title?: string;
-}
+/**
+ * TYPES
+ */
+import { IModalProps } from './types';
 
-const Modal = ({ opened, onClose, children, title }: ModalProps) => {
+const Modal = ({ opened, onClose, children, title }: IModalProps) => {
   return !opened ? (
     <></>
   ) : (

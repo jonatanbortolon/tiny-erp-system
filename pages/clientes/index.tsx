@@ -1,7 +1,5 @@
 import { NextPage } from 'next';
-
 import Layout, { Content, Menu } from '../../src/components/Layout';
-
 import {
   ContentTitle,
   ToolBarContainer,
@@ -11,7 +9,7 @@ import {
   ToolBarInput,
   SearchIcon,
   LoadingGif,
-} from '../../src/styles/Clientes';
+} from '../../src/pages/clientes/styles';
 
 // import { Container } from './styles';
 

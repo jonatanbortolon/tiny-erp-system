@@ -1,13 +1,12 @@
-export interface Product {
+export interface IProduct {
   _id: number;
   name: string;
   price: number;
   category: number;
-  code: number;
   quantity: number;
 }
 
-export interface Category {
+export interface ICategory {
   _id: number;
   name: string;
 }

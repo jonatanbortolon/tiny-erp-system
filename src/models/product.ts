@@ -1,21 +1,16 @@
-import { Schema } from "mongoose";
-import uniqid from "uniqid";
+import { Schema } from 'mongoose';
 
-import ProductDatabase from "../database/product";
+import ProductDatabase from '../database/product';
 
 const ProductSchema: Schema = new Schema(
   {
-    code: {
-      type: String,
-      default: uniqid,
-    },
     name: {
       type: String,
       required: true,
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: "Category",
+      ref: 'Category',
     },
     quantity: {
       type: Number,
@@ -39,9 +34,7 @@ function getter(v: string): number {
   return parseFloat((parseInt(v) / 100).toFixed(2));
 }
 
-ProductSchema.set("toObject", { getters: true });
-ProductSchema.set("toJSON", { getters: true });
+ProductSchema.set('toObject', { getters: true });
+ProductSchema.set('toJSON', { getters: true });
 
-export default {
-  Product: ProductDatabase.model("Product", ProductSchema),
-};
+export default ProductDatabase.model('Product', ProductSchema);

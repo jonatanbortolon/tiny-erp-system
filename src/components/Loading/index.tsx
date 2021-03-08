@@ -1,19 +1,17 @@
 import React from 'react';
-
 import { Modal, LoadingIcon } from './styles';
 
-interface LoadingProps {
-  enabled: boolean;
-}
+/**
+ * TYPES
+ */
+import { ILoadingProps } from './types';
 
-const Loading = ({ enabled }: LoadingProps) => {
+const Loading = ({ enabled }: ILoadingProps) => {
   return enabled ? (
     <Modal>
       <LoadingIcon />
     </Modal>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export default Loading;
