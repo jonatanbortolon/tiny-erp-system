@@ -11,13 +11,13 @@ import {
 
 import Modal, { ModalInput, ModalInputLabel } from '../Modal';
 
-import { Product, Category } from '../../interfaces';
+import { IProduct, ICategory } from '../../interfaces';
 
 interface TableProps {
   children?: React.ReactNode;
   filterString: string;
-  products: Product[];
-  categories: Category[];
+  products: IProduct[];
+  categories: ICategory[];
   onProductChangePrice: any;
   onProductDelete: any;
 }
@@ -29,9 +29,10 @@ const Table = ({
   onProductChangePrice,
   onProductDelete,
 }: TableProps) => {
-  const [productPriceModal, changeProductPriceModal] = useState<Product | null>(
-    null
-  );
+  const [
+    productPriceModal,
+    changeProductPriceModal,
+  ] = useState<IProduct | null>(null);
 
   return (
     <>
@@ -46,24 +47,22 @@ const Table = ({
           ' ' +
           productPriceModal?.name
         }
-        onClose={() => changeProductPriceModal(null)}
-      >
+        onClose={() => changeProductPriceModal(null)}>
         <form
           onSubmit={(e) => {
             onProductChangePrice(e);
             changeProductPriceModal(null);
-          }}
-        >
-          <ModalInputLabel htmlFor="product">Id do Produto</ModalInputLabel>
+          }}>
+          <ModalInputLabel htmlFor='product'>Id do Produto</ModalInputLabel>
           <ModalInput
             disabled
-            type="text"
-            id="product"
+            type='text'
+            id='product'
             value={productPriceModal?._id}
           />
-          <ModalInputLabel htmlFor="price">Preço (R$)</ModalInputLabel>
-          <ModalInput type="number" id="price" step="0.01" />
-          <ModalInput type="submit" value="Alterar Preço" />
+          <ModalInputLabel htmlFor='price'>Preço (R$)</ModalInputLabel>
+          <ModalInput type='number' id='price' step='0.01' />
+          <ModalInput type='submit' value='Alterar Preço' />
         </form>
       </Modal>
       {/*=====================================================================================*/}
@@ -74,8 +73,7 @@ const Table = ({
               height: 50,
               backgroundColor: '#f0f0f0',
               color: 'gray',
-            }}
-          >
+            }}>
             <TdContainer style={{ fontWeight: 'bold' }}>Código</TdContainer>
             <TdContainer style={{ fontWeight: 'bold' }}>Nome</TdContainer>
             <TdContainer style={{ fontWeight: 'bold' }}>Categoria</TdContainer>
@@ -88,20 +86,19 @@ const Table = ({
           {
             // CATEGORY PRODUCTS LIST =============================================================================
             products
-              .filter(
-                (product: Product) =>
-                  product.name.includes(filterString) ||
-                  product.code.toString().includes(filterString)
+              .filter((product: IProduct) =>
+                product.name
+                  .toLocaleLowerCase()
+                  .includes(filterString.toLocaleLowerCase())
               )
-              .map((product: Product) => (
+              .map((product: IProduct) => (
                 <TrContainer
                   key={product._id}
                   style={{
                     backgroundColor: 'white',
-                  }}
-                >
+                  }}>
                   <TdContainer key={product._id + 'code'}>
-                    {product.code}
+                    {product._id}
                   </TdContainer>
                   <TdContainer key={product._id + 'name'}>
                     {product.name}
@@ -121,8 +118,7 @@ const Table = ({
                     key={product._id + 'actions'}
                     style={{
                       verticalAlign: 'center',
-                    }}
-                  >
+                    }}>
                     <Button onClick={() => changeProductPriceModal(product)}>
                       Alterar Preço
                     </Button>
