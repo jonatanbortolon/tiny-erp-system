@@ -55,7 +55,7 @@ export const ModalCloseButton = styled(CloseOutline)`
 `;
 
 export const ModalTitleDiv = styled.div`
-  width: 100%;
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: center;

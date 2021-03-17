@@ -62,7 +62,7 @@ const useController = () => {
         // @ts-ignore
         category: e.target[1].value,
         // @ts-ignore
-        quantity: operation ? 'up' : 'down',
+        quantity: e.target[2].value,
         // @ts-ignore
         price: e.target[3].value,
       }),

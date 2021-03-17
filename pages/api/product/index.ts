@@ -4,7 +4,9 @@ import Product from '../../../src/models/product';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
-      const products = await Product.find().sort({ category: -1 });
+      const products = await Product.find()
+        .collation({ locale: 'pt', strength: 1, caseLevel: false })
+        .sort({ name: 1 });
 
       return res.status(200).json(products);
     } catch (e) {
@@ -17,7 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (req.body.category === '') {
         return res.status(500).end();
       }
-
+      console.log(req.body);
       let newProd = new Product(req.body);
 
       await newProd.save();

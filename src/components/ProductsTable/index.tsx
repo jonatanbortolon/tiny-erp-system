@@ -77,10 +77,10 @@ const Table = ({
           {
             // CATEGORY PRODUCTS LIST =============================================================================
             products
-              .filter(
-                (product) =>
-                  product.name.includes(filterString) ||
-                  product._id.toString().includes(filterString)
+              .filter((product) =>
+                product.name
+                  .toLocaleLowerCase()
+                  .includes(filterString.toLocaleLowerCase())
               )
               .map((product, index) => (
                 <TrContainer

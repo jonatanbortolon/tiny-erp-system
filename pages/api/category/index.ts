@@ -4,7 +4,9 @@ import Category from '../../../src/models/category';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
-      const categories = await Category.find();
+      const categories = await Category.find()
+        .collation({ locale: 'pt', strength: 1, caseLevel: false })
+        .sort({ name: 1 });
 
       return res.status(200).json(categories);
     } catch (e) {
