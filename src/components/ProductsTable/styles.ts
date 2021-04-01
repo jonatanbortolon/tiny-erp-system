@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Trash } from '@styled-icons/bootstrap';
-import { Dollar } from '@styled-icons/boxicons-regular';
+import { EditAlt } from '@styled-icons/boxicons-regular';
 
 export const TableContainer = styled.table`
   width: 100%;
@@ -58,14 +58,21 @@ export const Button = styled.button`
   border-radius: 3px;
   margin-right: 10px;
 
+  @media (max-width: 1430px) {
+    font-size: 10px;
+    padding: 0 10px 0 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
   @media (max-width: 1050px) {
     display: none;
   }
 `;
 
-export const ChangePriceButton = styled(Dollar)`
+export const ChangePriceButton = styled(EditAlt)`
   height: 38px;
-  color: #ffd700;
+  color: inherit;
   cursor: pointer;
   border: 1px solid gainsboro;
   padding: 10px;

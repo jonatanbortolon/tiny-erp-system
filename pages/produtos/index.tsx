@@ -191,7 +191,7 @@ const Products: NextPage = () => {
                 filterString={controller.filter}
                 products={controller.products}
                 categories={controller.categories}
-                onProductChangePrice={controller.handleOnProductChangePrice}
+                onProductChange={controller.handleOnProductChange}
                 onProductDelete={controller.handleOnProductDelete}
               />
             )}

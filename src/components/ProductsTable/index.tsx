@@ -19,7 +19,7 @@ const Table = ({
   filterString,
   products,
   categories,
-  onProductChangePrice,
+  onProductChange,
   onProductDelete,
 }: ITableProps) => {
   const controller = useController();
@@ -28,31 +28,58 @@ const Table = ({
     <>
       {/*DELETE CATEGORY MODAL ===================================================================*/}
       <Modal
-        opened={controller.productPriceModal === null ? false : true}
+        opened={controller.productModal === null ? false : true}
         title={
           'Alterar Preço de ' +
           (categories.find(
-            (category) =>
-              category._id === controller.productPriceModal?.category
+            (category) => category._id === controller.productModal?.category
           )?.name || 'Sem categoria') +
           ' ' +
-          controller.productPriceModal?.name
+          controller.productModal?.name
         }
-        onClose={() => controller.changeProductPriceModal(null)}>
+        onClose={() => controller.changeProductModal(null)}>
         <form
           onSubmit={(e) => {
-            onProductChangePrice(e);
-            controller.changeProductPriceModal(null);
+            onProductChange(e);
+            controller.changeProductModal(null);
           }}>
-          <ModalInputLabel htmlFor='product'>Id do Produto</ModalInputLabel>
+          <ModalInputLabel htmlFor='id'>Id do Produto</ModalInputLabel>
           <ModalInput
             disabled
             type='text'
-            id='product'
-            value={controller.productPriceModal?._id}
+            id='id'
+            value={controller.productModal?._id}
+          />
+          <ModalInputLabel htmlFor='name'>Nome do Produto</ModalInputLabel>
+          <ModalInput
+            type='text'
+            id='name'
+            defaultValue={controller.productModal?.name}
+          />
+          <ModalInputLabel htmlFor='category'>
+            Categoria do Produto
+          </ModalInputLabel>
+          <ModalInput
+            disabled
+            type='text'
+            id='category'
+            value={controller.productModal?.category}
+          />
+          <ModalInputLabel htmlFor='quantity'>
+            Quantidade do Produto
+          </ModalInputLabel>
+          <ModalInput
+            type='text'
+            id='quantity'
+            defaultValue={controller.productModal?.quantity}
           />
           <ModalInputLabel htmlFor='price'>Preço (R$)</ModalInputLabel>
-          <ModalInput type='number' id='price' step='0.01' />
+          <ModalInput
+            type='number'
+            id='price'
+            step='0.01'
+            defaultValue={controller.productModal?.price}
+          />
           <ModalInput type='submit' value='Alterar Preço' />
         </form>
       </Modal>
@@ -107,15 +134,11 @@ const Table = ({
                       verticalAlign: 'center',
                     }}>
                     <Button
-                      onClick={() =>
-                        controller.changeProductPriceModal(product)
-                      }>
-                      Alterar Preço
+                      onClick={() => controller.changeProductModal(product)}>
+                      Editar Produto
                     </Button>
                     <ChangePriceButton
-                      onClick={() =>
-                        controller.changeProductPriceModal(product)
-                      }
+                      onClick={() => controller.changeProductModal(product)}
                     />
                     <DeleteButton
                       onClick={() => onProductDelete(product._id)}

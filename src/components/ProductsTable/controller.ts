@@ -6,14 +6,11 @@ import { useState } from 'react';
 import { IProduct } from '../../interfaces';
 
 const useController = () => {
-  const [
-    productPriceModal,
-    changeProductPriceModal,
-  ] = useState<IProduct | null>(null);
+  const [productModal, changeProductModal] = useState<IProduct | null>(null);
 
   return {
-    productPriceModal,
-    changeProductPriceModal,
+    productModal,
+    changeProductModal,
   };
 };
 

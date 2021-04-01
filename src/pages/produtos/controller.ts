@@ -104,9 +104,7 @@ const useController = () => {
     toggleLoading(false);
   }
 
-  async function handleOnProductChangePrice(
-    e: React.FormEvent<HTMLFormElement>
-  ) {
+  async function handleOnProductChange(e: React.FormEvent<HTMLFormElement>) {
     toggleLoading(true);
     e.preventDefault();
 
@@ -116,7 +114,11 @@ const useController = () => {
       method: 'PUT',
       body: JSON.stringify({
         //@ts-ignore
-        price: e.target[1].value,
+        name: e.target[1].value,
+        //@ts-ignore
+        quantity: e.target[3].value,
+        //@ts-ignore
+        price: e.target[4].value,
       }),
     }).then(() => productsMutate());
 
@@ -176,7 +178,7 @@ const useController = () => {
     toggleRemoveCategoryModal,
     handleOnCategoryDelete,
     changeFilter,
-    handleOnProductChangePrice,
+    handleOnProductChange,
     handleOnProductDelete,
   };
 };

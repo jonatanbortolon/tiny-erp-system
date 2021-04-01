@@ -16,10 +16,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } else if (req.method === 'POST') {
     try {
-      if (req.body.category === '') {
+      if (
+        req.body.name === '' ||
+        req.body.quantity === '' ||
+        req.body.price === ''
+      ) {
         return res.status(500).end();
       }
-      console.log(req.body);
+
+      if (req.body.quantity === '') req.body.quantity = '0';
+
+      if (isNaN(Number(req.body.quantity))) return res.status(500).end();
+
       let newProd = new Product(req.body);
 
       await newProd.save();

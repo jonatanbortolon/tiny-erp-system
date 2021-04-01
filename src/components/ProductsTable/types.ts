@@ -5,6 +5,6 @@ export interface ITableProps {
   filterString: string;
   products: IProduct[];
   categories: ICategory[];
-  onProductChangePrice: any;
+  onProductChange: any;
   onProductDelete: any;
 }

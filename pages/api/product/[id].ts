@@ -6,10 +6,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (typeof req.query.id === 'undefined') return res.status(500).end();
 
   if (req.method === 'PUT') {
+    if (
+      req.body.name === '' ||
+      req.body.quantity === '' ||
+      req.body.price === ''
+    )
+      return res.status(500).end();
+
     try {
       await Product.updateOne(
         { _id: Types.ObjectId(req.query.id as string) },
-        { price: req.body.price }
+        {
+          name: req.body.name,
+          quantity: req.body.quantity,
+          price: req.body.price,
+        }
       );
 
       return res.status(200).end();
