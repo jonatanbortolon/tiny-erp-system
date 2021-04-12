@@ -16,11 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } else if (req.method === 'POST') {
     try {
-      if (
-        req.body.name === '' ||
-        req.body.quantity === '' ||
-        req.body.price === ''
-      ) {
+      if (req.body.name === '' || req.body.price === '') {
         return res.status(500).end();
       }
 

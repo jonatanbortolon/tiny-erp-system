@@ -58,7 +58,7 @@ const Products: NextPage = () => {
             ))}
           </ModalSelect>
           <ModalInputLabel htmlFor='quantity'>Quantidade</ModalInputLabel>
-          <ModalInput type='number' id='quantity' />
+          <ModalInput type='number' id='quantity' defaultValue={0} />
           <ModalInputLabel htmlFor='price'>Preço</ModalInputLabel>
           <ModalInput type='number' id='price' step='0.01' />
           <ModalInput type='submit' value='Adicionar' />
